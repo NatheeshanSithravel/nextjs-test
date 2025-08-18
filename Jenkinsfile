@@ -23,7 +23,6 @@ pipeline {
                     def scannerHome = tool 'sonar-scanner'
                     withSonarQubeEnv('sonar-server') {
                          sh """
-                        sonar-scanner \
                           -Dsonar.projectKey=${APP_NAME} \
                           -Dsonar.projectName='${APP_NAME}' \
                           -Dsonar.sources=src \
