@@ -4,10 +4,10 @@ pipeline {
    	 PROJECT = "mobitel_pipeline"
  	   APP_NAME = "sfa-frontend"      //Change the application name , which will also be the deployment name
      CIR = "${ENV}-docker-reg.mobitel.lk"
-     CIR_USER = 'mobitel'
-     CIR_PW = credentials('cir-pw')
+     CIR_USER = 'natheeshshaan@gmail.com'
+     CIR_PW = "Qwerty@12"
      KUB_NAMESPACE = "extweb"               //Change the namespace accordingly
-     IMAGE_TAG = "${CIR}/${PROJECT}/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
+     IMAGE_TAG = "natheeshan/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
      EXPOSE_PORT="3000"                  
      HARBOUR_SECRET="harbor-extweb"              //Change the harbour secret name accordingly
      
@@ -15,19 +15,26 @@ pipeline {
     agent none 
     stages {  
 
-       /*
+       
         stage('Run SonarQube analysis') {
             agent any
             steps {
                 script {
                     def scannerHome = tool 'sonarscanner'
                     withSonarQubeEnv('sonarserver') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=mSMS_performance_monitor_backend -Dsonar.projectName='mSMS_performance_monitor_backend'"
+                         sh """
+                        sonar-scanner \
+                          -Dsonar.projectKey=${APP_NAME} \
+                          -Dsonar.projectName='${APP_NAME}' \
+                          -Dsonar.sources=src \
+                          -Dsonar.exclusions=**/node_modules/**,**/build/**,**/dist/**,**/.next/**,**/out/** \
+                          -Dsonar.sourceEncoding=UTF-8
+                    """
                     }
                 }
             }
         }
-		 */
+		 
         
 	  stage('Building & Deploy Image') {
       	agent any
