@@ -20,8 +20,8 @@ pipeline {
             agent any
             steps {
                 script {
-                    def scannerHome = tool 'sonarscanner'
-                    withSonarQubeEnv('sonarserver') {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('sonar-server') {
                          sh """
                         sonar-scanner \
                           -Dsonar.projectKey=${APP_NAME} \
@@ -174,14 +174,14 @@ pipeline {
         }
             post {
             success {
-              mail to: 'mobiteldev@mobitel.lk',
+              mail to: 'natheeshshaan@gmail.com',
                          subject: "${env.JOB_NAME} - Build  ${env.BUILD_NUMBER} - Success!",
                        body: """${env.JOB_NAME} - Build  ${env.BUILD_NUMBER} - Success:
                              Check console output at ${env.BUILD_URL} to view the results."""
                     }
             failure {
-                   mail to: "jenkins.notification@mobitel.lk",
-                   cc: 'mobiteldev@mobitel.lk',
+                   mail to: "natheeshshaan@gmail.com",
+                   cc: 'natheeshshaan@gmail.com',
                        subject: "${env.JOB_NAME} - Build  ${env.BUILD_NUMBER} - Failed!",
                         body: """${env.JOB_NAME} - Build  ${env.BUILD_NUMBER} - Failed:
                              Check console output at ${env.BUILD_URL} to view the results."""
