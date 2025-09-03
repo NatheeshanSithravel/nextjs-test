@@ -20,7 +20,7 @@ pipeline {
 		    steps{
               sh '''
               
-          		docker login -u ${CIR_USER} -p ${CIR_PW} ${CIR}
+          		docker login -u ${CIR_USER} -p ${CIR_PW}
 		     	docker build --tag=${IMAGE_TAG} .
 				docker push ${IMAGE_TAG}
 
