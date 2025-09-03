@@ -13,28 +13,7 @@ pipeline {
      
     }
     agent none 
-    stages {  
-
-       
-        stage('Run SonarQube analysis') {
-            agent any
-            steps {
-                script {
-                    def scannerHome = tool 'sonar-scanner'
-                    withSonarQubeEnv('sonar-server') {
-                         sh """
-						  ${scannerHome}/bin/sonar-scanner \
-						  -Dsonar.projectKey=${APP_NAME} \
-                          -Dsonar.projectName='${APP_NAME}' \
-                          -Dsonar.sources=./app \
-                          -Dsonar.exclusions=**/node_modules/**,**/build/**,**/dist/**,**/.next/**,**/out/** \
-                          -Dsonar.sourceEncoding=UTF-8
-                    """
-                    }
-                }
-            }
-        }
-		 
+    stages {  		 
         
 	  stage('Building & Deploy Image') {
       	agent any
@@ -90,7 +69,7 @@ pipeline {
                sh '''
                
                mkdir -p /root/.kube/
-               cp /root/.cert/${ENV}/config /root/.kube/
+               cp /var/jenkins_home/config /root/.kube/
                '''
                script {
                def isDeployed = sh(returnStatus: true, script: 'kubectl -n ${KUB_NAMESPACE} set image deployment/${APP_NAME}  ${APP_NAME}=${IMAGE_TAG}  --record ')
