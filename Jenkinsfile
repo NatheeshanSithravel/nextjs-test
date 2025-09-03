@@ -5,7 +5,7 @@ pipeline {
  	   APP_NAME = "sfa-frontend"      //Change the application name , which will also be the deployment name
      CIR = "${ENV}-docker-reg.mobitel.lk"
      CIR_USER = 'natheeshshaan@gmail.com'
-     CIR_PW = "Qwerty@12"
+     CIR_PW = "Qwerty@123"
      KUB_NAMESPACE = "extweb"               //Change the namespace accordingly
      IMAGE_TAG = "natheeshan/${APP_NAME}:${ENV}.${env.BUILD_NUMBER}"
      EXPOSE_PORT="3000"                  
